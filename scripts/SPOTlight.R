@@ -7,64 +7,17 @@ library(SPOTlight)
 library(igraph)
 library(RColorBrewer)
 
-loadVisium <- function(path){
-  sample <- Load10X_Spatial(path) #Load10X_Spatial("~/tingalab/Matt/visium_results/BL_197129U/outs/")
-  sample <- PercentageFeatureSet(sample, pattern="^MT-", col.name="percent.mt")
-  sample <- SCTransform(sample, assay="Spatial", vars.to.regress = "percent.mt", return.only.var.genes = FALSE) %>%
-    RunPCA()
-  return(sample)
-}
+# Set this to your sge-integration folder
+setwd("/home/bradlem4/sge-integration/")
 
-BL1971 <- loadVisium("~/tingalab/Matt/ureter/visium/sr-results/BL_197129U/outs/")
-scRNA <- readRDS("~/tingalab/Manuscripts/2021_UreterManuscript/ANALYSIS/Seurat/2020_09_21_ureter10/2020_09_21_ureter10_clustered.rds") %>%
-  SCTransform(vars.to.regress = "perc.mt")
+source("scripts/functions.R")
+scRNA <- readRDS("data/scRNA/ureter-scRNA.Rds")
 
+#----- Load data
 
-ElbowPlot(BL1971)
-UMAP <- function(sample, n_dims=25, res=0.3){
-  sample <- FindNeighbors(sample,reduction="pca", dims=1:n_dims)
-  sample <- FindClusters(sample, resolution=res)
-  sample <- RunUMAP(sample,reduction="pca", dims=1:n_dims)
-  return(sample)
-}
-
-global.anchor.labels.distinct=c("Basal Cells 1", "Intermediate", "Cytoxic T Cells", "T Cells", "Leukocytes 1", 
-                                "Urothelial 1", "Fibroblasts 1", "Umbrella Cells", "Basal Cells 2", 
-                                "Leukocytes 2", "NK Cells", "Endothelial Cells", "B Cells", 
-                                "Smooth Muscle", "Urothelial 2", "Basal Cells 3", "Leukocytes 3", 
-                                "Mast Cells", "Urothelial 3", "Fibroblasts 2")
-
-# global.anchor.labels=c("Basal Cells", "Intermediate", "Cytoxic T Cells", "T Cells", 
-#                        "Leukocytes", "Urothelial", "Fibroblasts", "Umbrella Cells", "Basal Cells", 
-#                        "Leukocytes", "NK Cells", "Endothelial Cells", "B Cells", 
-#                        "Smooth Muscle", "Urothelial", "Basal Cells", "Leukocytes", 
-#                        "Mast Cells", "Urothelial", "Fibroblasts")
-
-global.anchor.labels.reclustered=c("T Cells", "Intermediate (Krt13+)", "Leukocytes 1", "Cytoxic T Cells", "Basal Cells 1", "Fibroblasts 1",
-                                   "Umbrella Cells", "Urothelial 1", "Intermediate (Krt8+)", "Intermediate (Jun/Fos-Hi, Krt13+)", "Leukocytes 2",
-                                   "NK Cells", "Endothelial Cells", "B Cells", "Smooth Muscle Cells", "Urothelial 2", "Leukocytes 3", "Basal Cells 3", "Mast Cells", "Fibroblasts 2")
-
-anchor.labels <- global.anchor.labels.reclustered
-scRNA@meta.data$new_subclass = sapply(scRNA@meta.data$new_clusters, function(i){anchor.labels[as.numeric(i)][1]})
-
-
-scRNA@meta.data %>%
-  dplyr::count(subclass) %>%
-  gt::gt(.[-1, ]) %>%
-  gt::tab_header(
-    title = "Cell types present in the reference dataset",
-  ) %>%
-  gt::cols_label(
-    subclass = gt::html("Cell Type")
-  )
-
-Seurat::Idents(object = scRNA) <- scRNA@meta.data$subclass
-cluster_markers_all <- Seurat::FindAllMarkers(object = scRNA, 
-                                              slot = "data",
-                                              verbose = TRUE, 
-                                              only.pos = TRUE)
-saveRDS(cluster_markers_all, file = "scRNA_cluster_markers-new-clusters.Rds")
-write.csv(cluster_markers_all, file="scRNA_cluster_markers-reclustered.csv")
+# Since SPOTlight uses the same format as Seurat, we can repurpose the methods to load
+U1 <- preProcessSeuratVisium("data/U1", normalization = "LogNormalize")
+U2 <- preProcessSeuratVisium("data/U2", normalization = "LogNormalize")
 
 spotlight_ls <- spotlight_deconvolution(
   se_sc = scRNA,
