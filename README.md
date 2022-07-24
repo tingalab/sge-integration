@@ -1,5 +1,5 @@
-# [TITLE]
-Repository for [TITLE] STAR protocol
+# Benchmarking Three Methods for Combining Single-cell RNA-seq and Spatial Gene Expression Data
+Repository for *Benchmarking Three Methods for Combining Single-cell RNA-seq and Spatial Gene Expression Data* STAR protocol
 
 ## System Requirements
 
