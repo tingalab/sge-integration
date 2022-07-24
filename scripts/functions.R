@@ -81,3 +81,37 @@ preProcessGiotto<-function(gobject, name){
                             name = paste0(name, 'spatial_network'))
   return(gobject)
 }
+
+# ---------- SPOTlight -------
+
+spotlightDeconvolve <- function(vis, scrna, markers, cellsper=107,hvg=4273){
+  spotlight_ls <- spotlight_deconvolution(
+    se_sc = scrna,
+    counts_spatial = vis@assays$Spatial@counts,
+    clust_vr = "subclass", # Variable in sc_seu containing the cell-type annotation
+    cluster_markers = markers, # Dataframe with the marker genes
+    cl_n = cellsper, # number of cells per cell type to use
+    hvg = hvg, # Number of HVG to use
+    transf = "uv", # Perform unit-variance scaling per cell and spot prior to factorzation and NLS
+    method = "nsNMF", # Factorization method
+    min_cont = 0 # Remove those cells contributing to a spot below a certain threshold 
+  )
+  
+  nmf_mod <- spotlight_ls[[1]]
+  decon_mtrx <- spotlight_ls[[2]]
+  
+  decon_mtrx_sub <- decon_mtrx[, colnames(decon_mtrx) != "res_ss"]
+  decon_mtrx_sub[decon_mtrx_sub < 0.08] <- 0
+  decon_mtrx <- cbind(decon_mtrx_sub, "res_ss" = decon_mtrx[, "res_ss"])
+  rownames(decon_mtrx) <- colnames(vis)
+  
+  decon_df <- decon_mtrx %>%
+    data.frame() %>%
+    tibble::rownames_to_column("barcodes")
+  
+  s.obj.integrated@meta.data <- vis@meta.data %>%
+    tibble::rownames_to_column("barcodes") %>%
+    dplyr::left_join(decon_df, by = "barcodes") %>%
+    tibble::column_to_rownames("barcodes")
+    return(vis)
+}
