@@ -27,15 +27,19 @@ markers <- FindAllMarkers(scRNA, group.by = "subclass")
 U1.SL <- spotlightDeconvolve(U1.SL, scRNA, markers)
 U2.SL <- spotlightDeconvolve(U2.SL, scRNA, markers)
 
-ggsave(plot =  patchwork::wrap_plots(purrr::map(levels(as.factor(scRNA$subclass)), function(x) SPOTlight::spatial_scatterpie(se_obj = U1.SL,
-                                                                                        cell_types_all = levels(as.factor(scRNA$subclass)),
-                                                                                        cell_types_interest=x,
-                                                                                        img_path = "data/U1/spatial/tissue_hires_image.png",
-                                                                                        pie_scale = 0.4)), ncol = 6), filename="figures/SPOTlight/Figure_3a.pdf", device="pdf")
-ggsave(plot =  patchwork::wrap_plots(purrr::map(levels(as.factor(scRNA$subclass)), function(x) SPOTlight::spatial_scatterpie(se_obj = U2.SL,
-                                                                                                                             cell_types_all = cell_types_all,
-                                                                                                                             cell_types_interest=x, 
-                                                                                                                             img_path = "data/U2/spatial/tissue_hires_image.png",
-                                                                                                                             pie_scale = 0.4), ncol = 2), file="figures/SPOTlight/Figure_3b"), device="pdf")
+cell.names <- names(which(colSums(U1.SL@meta.data[,-c(1:4, ncol(U1.SL@meta.data))]) > 0))
+ggsave(plot =  patchwork::wrap_plots(purrr::map(cell.names, function(x) SPOTlight::spatial_scatterpie(se_obj = U1.SL,
+    cell_types_all = cell.names,
+    cell_types_interest=x,
+    img_path = "data/U1/spatial/tissue_lowres_image.png",
+    pie_scale = 0.4)), ncol = 4), filename="figures/SPOTlight/Figure_3a.pdf", device="pdf", width = 25, height = 25, units = "in", dpi = 300)
+
+cell.names <- names(which(colSums(U2.SL@meta.data[,-c(1:4, ncol(U2.SL@meta.data))]) > 0))
+ggsave(plot =  patchwork::wrap_plots(purrr::map(cell.names, function(x) SPOTlight::spatial_scatterpie(se_obj = U2.SL,
+    cell_types_all = cell.names,
+     cell_types_interest=x, 
+     img_path = "data/U2/spatial/tissue_lowres_image.png",
+     pie_scale = 0.4)), ncol = 4), filename="figures/SPOTlight/Figure_3b.pdf", 
+    device="pdf", width = 25, height = 25, units = "in", dpi = 300)
 
 

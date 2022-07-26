@@ -36,8 +36,8 @@ U2.Seurat <- anchorMapping(scRNA, U2.Seurat, feats = genes, query.dims=30, ancho
 
 # Plot the predictions made by the single-cell data
 scplots <- purrr::map(levels(as.factor(scRNA$subclass)), function(x) SpatialFeaturePlot(U1.Seurat, x))
-patchwork::wrap_plots(scplots, ncol=4) %T>% ggsave(filename = "figures/Seurat/Figure_1a.pdf", width = 45, height = 45, units = "in", dpi = 300)
+patchwork::wrap_plots(scplots, ncol=4) %T>% ggsave(filename = "figures/Seurat/Figure_1a.pdf", width = 25, height = 25, units = "in", dpi = 300)
 
 scplots <- purrr::map(levels(as.factor(scRNA$subclass)), function(x) SpatialFeaturePlot(U2.Seurat, x))
-patchwork::wrap_plots(scplots, ncol=4) %T>% ggsave(filename = "figures/Seurat/Figure_1b.pdf", width = 45, height = 45, units = "in", dpi = 300)
+patchwork::wrap_plots(scplots, ncol=4) %T>% ggsave(filename = "figures/Seurat/Figure_1b.pdf", width =25, height = 25, units = "in", dpi = 300)
 

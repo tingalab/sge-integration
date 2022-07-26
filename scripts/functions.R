@@ -109,9 +109,9 @@ spotlightDeconvolve <- function(vis, scrna, markers, cellsper=107,hvg=4273){
     data.frame() %>%
     tibble::rownames_to_column("barcodes")
   
-  s.obj.integrated@meta.data <- vis@meta.data %>%
+  vis@meta.data <- vis@meta.data %>%
     tibble::rownames_to_column("barcodes") %>%
     dplyr::left_join(decon_df, by = "barcodes") %>%
     tibble::column_to_rownames("barcodes")
-    return(vis)
+    return(vis) 
 }

@@ -46,8 +46,8 @@ U2 <-  createGiottoVisiumObject(visium_dir = 'data/U2', expr_data = 'filter',
 # spatPlot(gobject = U2, cell_color = 'in_tissue', show_image = T, point_alpha = 0.7,
 #          save_param = list(save_name = 'U2_spatplot_image'))
 
-U1<- preProcessGiotto(U1, "U1")
-U2<-preProcessGiotto(U2, "U2")
+U1.Giotto<- preProcessGiotto(U1, "U1")
+U2.Giotto<-preProcessGiotto(U2, "U2")
 
 # First you have to create the rank method signature matrix.
 sc_sign_matrix <- makeSignMatrixRank(
@@ -59,23 +59,23 @@ sc_sign_matrix <- makeSignMatrixRank(
 
 
 # Run spatial enrichment for both samples
-U1 <- runSpatialEnrich(
-  U1,
+U1.Giotto <- runSpatialEnrich(
+  U1.Giotto,
   enrich_method = c("rank"),
   sign_matrix = sc_sign_matrix,
   expression_values = c("normalized"),
 )
 
-U2 <- runSpatialEnrich(
-  U2,
+U2.Giotto <- runSpatialEnrich(
+  U2.Giotto,
   enrich_method = c("rank"),
   sign_matrix = sc_sign_matrix,
   expression_values = c("normalized"),
 )
 
 # Plot single cell enrichment patterns and simultaneously save figures in folder.
-scplots <- purrr::map(levels(as.factor(scRNA$subclass)), function(i) spatPlot(gobject = U1, cell_color=unlist(c(U1@spatial_enrichment$rank[,..i])), point_size = 4.5) + ggtitle(i) + scale_fill_distiller(palette = "Spectral"))
-patchwork::wrap_plots(scplots, ncol=4) %T>% ggsave(filename = "figures/Giotto/Figure_2a.pdf", width = 45, height = 45, units = "in", dpi = 300)
+scplots <- purrr::map(levels(as.factor(scRNA$subclass)), function(i) spatPlot(gobject = U1.Giotto, cell_color=unlist(c(U1@spatial_enrichment$rank[,..i])), point_size = 2) + ggtitle(i) + scale_fill_distiller(palette = "Spectral"))
+patchwork::wrap_plots(scplots, ncol=4) %T>% ggsave(filename = "figures/Giotto/Figure_2a.pdf", width = 25, height = 20, units = "in", dpi = 300)
 
-scplots <- purrr::map(levels(as.factor(scRNA$subclass)), function(i) spatPlot(gobject = U2, cell_color=unlist(c(U2@spatial_enrichment$rank[,..i])), point_size = 4.5) + ggtitle(i) + scale_fill_distiller(palette = "Spectral"))
-patchwork::wrap_plots(scplots, ncol=4)%T>% ggsave(filename = "figures/Giotto/Figure_2b.pdf", width = 45, height = 45, units = "in", dpi = 300)
+scplots <- purrr::map(levels(as.factor(scRNA$subclass)), function(i) spatPlot(gobject = U2.Giotto, cell_color=unlist(c(U2@spatial_enrichment$rank[,..i])), point_size = 2) + ggtitle(i) + scale_fill_distiller(palette = "Spectral"))
+patchwork::wrap_plots(scplots, ncol=4)%T>% ggsave(filename = "figures/Giotto/Figure_2b.pdf", width = 25, height = 20, units = "in", dpi = 300)
