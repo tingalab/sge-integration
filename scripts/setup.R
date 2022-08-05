@@ -5,7 +5,6 @@ library(BayesSpace)
 library(purrr)
 library(janitor)
 library(magrittr)
-library(purrr)
 library(patchwork)
 library(stringr)
 
