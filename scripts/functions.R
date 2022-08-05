@@ -61,9 +61,9 @@ preProcessGiotto<-function(gobject, name){
   gobject <- subsetGiotto(gobject, cell_ids = in_tissue_barcodes)
   gobject <- normalizeGiotto(gobject, scalefactor = 10000, verbose = T)
   gobject <- addStatistics(gobject)
-  gobject <- calculateHVG(gobject, save_param = list(save_name = paste0(name, '_HVGplot')))
+  gobject <- calculateHVF(gobject, save_param = list(save_name = paste0(name, '_HVGplot')))
   gene_metadata = fDataDT(gobject)
-  featgenes = gene_metadata[hvg == 'yes' & perc_cells > 3 & mean_expr_det > 0.4]$gene_ID
+  featgenes = gene_metadata[hvf == 'yes' & perc_cells > 3 & mean_expr_det > 0.4]$gene_ID
   gobject <- runPCA(gobject, 
               genes_to_use = featgenes, 
               scale_unit = F, center = T, 
