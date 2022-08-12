@@ -29,6 +29,7 @@ U1 <- createGiottoVisiumObject(visium_dir = 'data/U1', expr_data = 'filter',
                               h5_visium_path = 'data/U1/filtered_feature_bc_matrix.h5',
                               h5_tissue_positions_path = 'data/U1/spatial/tissue_positions_list.csv', 
                               h5_image_png_path = 'data/U1/spatial/tissue_lowres_image.png',
+                              h5_json_scalefactors_path= 'data/U1/spatial/scalefactors_json.json',
                               gene_column_index = 2, instructions = instrs,
                               xmax_adj = 3200, ymin_adj = 2600, ymax_adj = 2900, xmin_adj = 1600)
 
@@ -36,6 +37,7 @@ U2 <-  createGiottoVisiumObject(visium_dir = 'data/U2', expr_data = 'filter',
                                      h5_visium_path = 'data/U2/filtered_feature_bc_matrix.h5',
                                      h5_tissue_positions_path = 'data/U2/spatial/tissue_positions_list.csv', 
                                      h5_image_png_path = 'data/U2/spatial/tissue_lowres_image.png',
+                                     h5_json_scalefactors_path= 'data/U2/spatial/scalefactors_json.json',
                                      gene_column_index = 2, instructions = instrs, xmax_adj = 2000, ymin_adj = 1500, ymax_adj = 1600, xmin_adj = 1400
                                       )
 
@@ -79,3 +81,27 @@ patchwork::wrap_plots(scplots, ncol=4) %T>% ggsave(filename = "figures/Giotto/Fi
 
 scplots <- purrr::map(levels(as.factor(scRNA$subclass)), function(i) spatPlot(gobject = U2.Giotto, cell_color=unlist(c(U2@spatial_enrichment$rank[,..i])), point_size = 2) + ggtitle(i) + scale_fill_distiller(palette = "Spectral"))
 patchwork::wrap_plots(scplots, ncol=4)%T>% ggsave(filename = "figures/Giotto/Figure_2b.pdf", width = 25, height = 20, units = "in", dpi = 300)
+                      
+# OPTIONAL: Use the following code for printing larger fonts for figures
+
+scplots <- purrr::map(levels(as.factor(scRNA$subclass)), function(i) spatPlot(gobject = U1.Giotto, cell_color=unlist(c(U1.Giotto@spatial_enrichment $cell$rna $rank[,..i])), point_size = 2) + 
+theme(title = element_text(size=18),
+          legend.text = element_text(size = 15),
+          legend.title = element_text(size = 15),
+          axis.title = element_text(size=15),
+          axis.text = element_text(size=15) + 
+ggtitle(i) + scale_fill_distiller(palette = “Spectral”))
+
+patchwork::wrap_plots(scplots, ncol=4) %T>% ggsave(filename = "figures/Giotto/Figure_2a.pdf", width = 25, height = 20, units = "in", dpi = 300)
+
+                      
+scplots <- purrr::map(levels(as.factor(scRNA$subclass)), function(i) spatPlot(gobject = U2.Giotto, cell_color=unlist(c(U2.Giotto@spatial_enrichment $cell$rna $rank[,..i])), point_size = 2) + 
+theme(title = element_text(size=18),
+          legend.text = element_text(size = 15),
+          legend.title = element_text(size = 15),
+          axis.title = element_text(size=15),
+          axis.text = element_text(size=15) + 
+ggtitle(i) + scale_fill_distiller(palette = “Spectral”))
+
+patchwork::wrap_plots(scplots, ncol=4) %T>% ggsave(filename = "figures/Giotto/Figure_2b.pdf", width = 25, height = 20, units = "in", dpi = 300)
+
