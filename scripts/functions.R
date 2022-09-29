@@ -38,10 +38,10 @@ UMAP <- function(sample, n_dims=15, res=0.5){
   return(sample)
 }
 
-anchorMapping <- function(reference, query, feats, query.dims=15, anchor.labels,save.loc=FALSE){
+anchorMapping <- function(reference, query, feats, query.dims=15, normalization.method = "LogNormalize", anchor.labels,save.loc=FALSE){
   DefaultAssay(query) <- "Spatial"
   #reference@meta.data$subclass = sapply(reference@meta.data$seurat_clusters, function(i){anchor.labels[as.numeric(i)][1]})
-  anchors = FindTransferAnchors(reference, query = query,  normalization.method = "LogNormalize", features = feats)
+  anchors = FindTransferAnchors(reference, query = query,  normalization.method = normalization.method, features = feats)
   predictions.assay <- TransferData(anchorset = anchors, refdata = reference$subclass, prediction.assay=TRUE, weight.reduction=query[["pca"]], dims=1:query.dims)
   non.mapping <- c()
   for(i in 1:dim(predictions.assay)[1]){ if(sum(predictions.assay@data[i,])==0) non.mapping <- c(non.mapping, rownames(predictions.assay[i]))}
