@@ -15,7 +15,7 @@ setwd("/home/bradlem4/sge-integration/")
 # Download Visium data from GitHub release
 download.file(url = "https://github.com/tingalab/sge-integration/releases/download/V1/protocol-data.tar.gz", destfile = "protocol-data.tar.gz")
 gunzip("protocol-data.tar.gz")
-file.remove("protocol-data.tar.gz")
+# file.remove("protocol-data.tar.gz")
 
 # Download single-cell data from GEO
 download.file(url = "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE184nnn/GSE184111/suppl/GSE184111_scRNA_ureter10_normalized_counts.txt.gz", destfile = "data/scRNA/count-matrix.txt.gz")
