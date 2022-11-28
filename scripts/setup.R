@@ -1,3 +1,9 @@
+# If running a new session, please run these two lines to load packages from your R library
+
+mylib="/home/sonas/R/mylib/" # replace this with your own R library path
+
+.libPaths(c(mylib, .libPaths()))
+
 library(Seurat)
 library(dplyr)
 library(tidyverse)
@@ -11,7 +17,7 @@ library(R.utils)
 
 # Set sge-integration folder as the currect working directory
 
-homedir<-"/home/bradlem4/" # replace the path within quotes to your current/home directory where you downloaded the sge-integration repository
+homedir<-"/home/sonas/star_protocol" # replace the path within quotes to your current/home directory where you downloaded the sge-integration repository
 setwd(paste0(homedir,"/sge-integration/"))
 
 # Download Visium data from GitHub release
