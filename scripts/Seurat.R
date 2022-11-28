@@ -46,14 +46,14 @@ patchwork::wrap_plots(scplots, ncol=4) %T>% ggsave(filename = "figures/Seurat/Fi
      
 # OPTIONAL: To generate plots with larger fonts use the following set of code instead
 
-scplots <- purrr::map(levels(as.factor(scRNA$subclass)), function(x) SpatialFeaturePlot(U1.Seurat, x)) +
+scplots <- purrr::map(levels(as.factor(scRNA$subclass)), function(x) SpatialFeaturePlot(U1.Seurat, x) +
                       theme(legend.key.size = unit(10, "mm"),
                             legend.text = element_text(size = 15),
                             legend.title = element_text(size = 20)))
 
 patchwork::wrap_plots(scplots, ncol=4) %T>% ggsave(filename = "figures/Seurat/Figure_1a.pdf", width = 25, height = 25, units = "in", dpi = 300)
 
-scplots <- purrr::map(levels(as.factor(scRNA$subclass)), function(x) SpatialFeaturePlot(U2.Seurat, x)) +
+scplots <- purrr::map(levels(as.factor(scRNA$subclass)), function(x) SpatialFeaturePlot(U2.Seurat, x) +
                       theme(legend.key.size = unit(10, "mm"),
                             legend.text = element_text(size = 15),
                             legend.title = element_text(size = 20)))
