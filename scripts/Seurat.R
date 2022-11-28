@@ -10,11 +10,14 @@ library(stringr)
 
 #--------Setup-------
 
+# This should be your directory/path where your sge-integration repository resides
+mydir='/home/sonas/star_protocol/'
+
 # Set this to your sge-integration folder
-setwd("/home/bradlem4/sge-integration/")
+setwd(paste0(mydir,"sge-integration/"))
 
 # Save the Seurat object for use with other integration methods.
-scRNA <- readRDS(scRNA, file = "data/scRNA/ureter-scRNA.Rds")
+scRNA <- readRDS(file = "data/scRNA/ureter-scRNA.Rds")
 genes<-read.csv(file ="data/scRNA/genes.csv")[,1]
 
 # Source the functions file to make them available to our active session of R
