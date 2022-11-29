@@ -34,9 +34,9 @@ install.packages("remotes",version="2.4.2")
 
 # Now install other packages (Giotto and SPOTlight)
 
-# For detailed installation instructions and troubleshooting please see https://giottosuite.readthedocs.io/en/master/gettingstarted.html#
+#For detailed installation instructions and troubleshooting please see https://giottosuite.readthedocs.io/en/latest/gettingstarted.html
+remotes::install_github("drieslab/Giotto@suite")
 
-remotes::install_github("RubD/Giotto")
 
 # For SPOTlight installation and other documentation, please refer to https://marcelosua.github.io/SPOTlight/
 devtools::install_github("https://github.com/MarcElosua/SPOTlight")
