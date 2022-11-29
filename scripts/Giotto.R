@@ -15,15 +15,25 @@ scRNA <- readRDS("data/scRNA/ureter-scRNA.Rds")
 
 #----- Configure workspace with Giotto
 
+# Ensure the Python environment for Giotto has been installed.
+library(Gitoto)
+genv_exists = checkGiottoEnvironment()
+if(!genv_exists){
+  # The following command need only be run once to install the Giotto environment.
+  installGiottoEnvironment()
+}
+
 results_folder = paste0(mydir,'figures/Giotto')
 
-# Install python dependencies for Giotto
-installGiottoEnvironment(packages_to_install = c("pandas==1.1.5", "networkx==2.6.3", "python-igraph==0.9.6", "leidenalg==0.8.7",
-                                                   "python-louvain==0.15", "scikit-learn==0.24.2"), force_environment = TRUE)
+# Install python dependencies for Giotto - not needed if correct Giotto is installed as these will be installed automatically
+#installGiottoEnvironment(packages_to_install = c("pandas==1.1.5", "networkx==2.6.3", "python-igraph==0.9.6", "leidenalg==0.8.7",
+#                                                   "python-louvain==0.15", "scikit-learn==0.24.2"), force_environment = TRUE)
 
 instrs = createGiottoInstructions(save_dir = results_folder,
                                   save_plot = TRUE,
                                   show_plot = FALSE)
+
+my_python_path = NULL
 
 ## Create new Giotto objects for each set of Visium data. We have performed the adjustment necessary, however new sets of Visium data will need to adjust the min_adj and max_adj values as necessary.
 # For more details, please see the Giotto vignette. 
@@ -33,12 +43,14 @@ U1 <- createGiottoVisiumObject(visium_dir = 'data/U1', expr_data = 'filter',
                               h5_tissue_positions_path = 'data/U1/spatial/tissue_positions_list.csv', 
                               h5_image_png_path = 'data/U1/spatial/tissue_lowres_image.png',
                               gene_column_index = 2, instructions = instrs,
+                              h5_json_scalefactors_path= 'data/U2/spatial/scalefactors_json.json', 
                               xmax_adj = 3200, ymin_adj = 2600, ymax_adj = 2900, xmin_adj = 1600)
 
 U2 <-  createGiottoVisiumObject(visium_dir = 'data/U2', expr_data = 'filter', 
                                      h5_visium_path = 'data/U2/filtered_feature_bc_matrix.h5',
                                      h5_tissue_positions_path = 'data/U2/spatial/tissue_positions_list.csv', 
-                                     h5_image_png_path = 'data/U2/spatial/tissue_lowres_image.png',
+                                     h5_image_png_path = 'data/U2/spatial/tissue_lowres_image.png', 
+                                     h5_json_scalefactors_path= 'data/U2/spatial/scalefactors_json.json',
                                      gene_column_index = 2, instructions = instrs, xmax_adj = 2000, ymin_adj = 1500, ymax_adj = 1600, xmin_adj = 1400
                                       )
 
