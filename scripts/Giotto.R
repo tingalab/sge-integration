@@ -3,15 +3,19 @@ library(msigdbr)
 library(ggplot2)
 library(viridis)
 
+# This should be your directory/path where your sge-integration repository resides
+mydir='/home/sonas/star_protocol/'
+
 # Set this to your sge-integration folder
-setwd("/home/bradlem4/sge-integration/")
+setwd(paste0(mydir,"sge-integration/"))
+
 
 source("scripts/functions.R")
 scRNA <- readRDS("data/scRNA/ureter-scRNA.Rds")
 
 #----- Configure workspace with Giotto
 
-results_folder = 'figures/Giotto'
+results_folder = paste0(mydir,'figures/Giotto')
 
 python_path = NULL 
 if(is.null(python_path)) {
@@ -29,7 +33,6 @@ U1 <- createGiottoVisiumObject(visium_dir = 'data/U1', expr_data = 'filter',
                               h5_visium_path = 'data/U1/filtered_feature_bc_matrix.h5',
                               h5_tissue_positions_path = 'data/U1/spatial/tissue_positions_list.csv', 
                               h5_image_png_path = 'data/U1/spatial/tissue_lowres_image.png',
-                              h5_json_scalefactors_path= 'data/U1/spatial/scalefactors_json.json',
                               gene_column_index = 2, instructions = instrs,
                               xmax_adj = 3200, ymin_adj = 2600, ymax_adj = 2900, xmin_adj = 1600)
 
@@ -37,7 +40,6 @@ U2 <-  createGiottoVisiumObject(visium_dir = 'data/U2', expr_data = 'filter',
                                      h5_visium_path = 'data/U2/filtered_feature_bc_matrix.h5',
                                      h5_tissue_positions_path = 'data/U2/spatial/tissue_positions_list.csv', 
                                      h5_image_png_path = 'data/U2/spatial/tissue_lowres_image.png',
-                                     h5_json_scalefactors_path= 'data/U2/spatial/scalefactors_json.json',
                                      gene_column_index = 2, instructions = instrs, xmax_adj = 2000, ymin_adj = 1500, ymax_adj = 1600, xmin_adj = 1400
                                       )
 
