@@ -17,11 +17,10 @@ scRNA <- readRDS("data/scRNA/ureter-scRNA.Rds")
 
 results_folder = paste0(mydir,'figures/Giotto')
 
-python_path = NULL 
-if(is.null(python_path)) {
-  installGiottoEnvironment(packages_to_install = c("pandas==1.1.5", "networkx==2.6.3", "python-igraph==0.9.6", "leidenalg==0.8.7",
+# Install python dependencies for Giotto
+installGiottoEnvironment(packages_to_install = c("pandas==1.1.5", "networkx==2.6.3", "python-igraph==0.9.6", "leidenalg==0.8.7",
                                                    "python-louvain==0.15", "scikit-learn==0.24.2"), force_environment = TRUE)
-}
+
 instrs = createGiottoInstructions(save_dir = results_folder,
                                   save_plot = TRUE,
                                   show_plot = FALSE)
