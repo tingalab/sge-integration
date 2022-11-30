@@ -1,5 +1,4 @@
 library(Giotto)
-library(msigdbr)
 library(ggplot2)
 library(viridis)
 
