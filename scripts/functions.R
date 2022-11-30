@@ -1,8 +1,6 @@
 library(Seurat)
 library(dplyr)
 library(tidyverse)
-library(BayesSpace)
-library(purrr)
 library(janitor)
 library(magrittr)
 library(purrr)
