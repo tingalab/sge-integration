@@ -1,15 +1,5 @@
-# Create new R library
-mylib="/home/sonas/R/mylib" # replace this with your own path
 
-dir.create(mylib)
-
-# Make it the default library for this session
-.libPaths(c(mylib, .libPaths()))
-
-# Check the current library path (your library should be listed first)
-.libPaths()
-
-#Install particular version of CRAN package (it will be installed into your library - DO NOT restart R or Rstudio when prompted until you finish installing all packages)
+#Install particular version of CRAN package 
 
 install.packages("Seurat", version="4.2.0")
 install.packages("dplyr", version="v1.0.8")
@@ -34,9 +24,25 @@ install.packages("remotes",version="2.4.2")
 
 # Now install other packages (Giotto and SPOTlight)
 
-#For detailed installation instructions and troubleshooting please see https://giottosuite.readthedocs.io/en/latest/gettingstarted.html
-remotes::install_github("drieslab/Giotto@suite")
-
-
 # For SPOTlight installation and other documentation, please refer to https://marcelosua.github.io/SPOTlight/
 devtools::install_github("https://github.com/MarcElosua/SPOTlight")
+
+
+# For detailed installation instructions and troubleshooting please see https://giottosuite.readthedocs.io/en/latest/gettingstarted.html
+
+#remotes::install_github("drieslab/Giotto@suite")
+remotes::install_github("RubD/Giotto@v1.1.0") 
+
+
+# Run this once to setup Giotto environment
+
+# installGiottoEnvironment(packages_to_install = c("pandas==1.1.5", "networkx==2.6.3", "python-igraph==0.9.6", "leidenalg==0.8.7","python-louvain==0.15", "scikit-learn==0.24.2"), force_environment = TRUE)
+#            
+ installGiottoEnvironment(packages_to_install = c("pandas", 
+                                                 "networkx", 
+                                                  "python-igraph", 
+                                                  "leidenalg",
+                                                  "python-louvain",
+                                                  "scikit-learn"), 
+                          force_environment = TRUE)
+
