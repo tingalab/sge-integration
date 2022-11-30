@@ -1,8 +1,8 @@
-  library(Matrix)
-  library(data.table)
-  library(SPOTlight)
-  library(igraph)
-  library(RColorBrewer)
+library(Matrix)
+library(data.table)
+library(SPOTlight)
+library(igraph)
+library(RColorBrewer)
   
 # Set this to your sge-integration folder
 mydir='/home/sonas/star_protocol/'
