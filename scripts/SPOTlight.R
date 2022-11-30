@@ -1,6 +1,3 @@
-  library(Seurat)
-  library(gt)
-  library(dplyr)
   library(Matrix)
   library(data.table)
   library(SPOTlight)
