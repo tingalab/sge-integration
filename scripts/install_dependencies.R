@@ -22,11 +22,7 @@ install.packages("R.utils", version="v2.12")
 install.packages("devtools")
 install.packages("remotes",version="2.4.2")
 
-# Now install other packages (Giotto and SPOTlight)
-
-# For SPOTlight installation and other documentation, please refer to https://marcelosua.github.io/SPOTlight/
-devtools::install_github("https://github.com/MarcElosua/SPOTlight")
-
+# Now install other packages (Giotto)
 
 # For detailed installation instructions and troubleshooting please see https://giottosuite.readthedocs.io/en/latest/gettingstarted.html
 
