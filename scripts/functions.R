@@ -115,36 +115,36 @@ preProcessGiotto<-function(gobject, name){
 # }
 
 
-spotlightDeconvolve <- function(vis, scrna, markers,hvg){
-  spotlight_ls <- SPOTlight(
-    x = scrna,
-    y=vis,
-    mgs = markers, # Dataframe with the marker genes
-    hvg = hvg, # Highly variable genes
-    groups = as.character(scrna$subclass),
-    model = "ns",
-    gene_id='gene',
-    group_id = 'cluster',
-    weight_id='avg_log2FC',
-    assay_sc='RNA',
-    assay_sp='Spatial',
-  )
-  
-  nmf_mod <- spotlight_ls[[1]]
-  decon_mtrx <- spotlight_ls[[2]]
-  
-  decon_mtrx_sub <- decon_mtrx[, colnames(decon_mtrx) != "res_ss"]
-  decon_mtrx_sub[decon_mtrx_sub < 0.08] <- 0
-  decon_mtrx <- cbind(decon_mtrx_sub, "res_ss" = decon_mtrx[, "res_ss"])
-  rownames(decon_mtrx) <- colnames(vis)
-  
-  decon_df <- decon_mtrx %>%
-    data.frame() %>%
-    tibble::rownames_to_column("barcodes")
-  
-  vis@meta.data <- vis@meta.data %>%
-    tibble::rownames_to_column("barcodes") %>%
-    dplyr::left_join(decon_df, by = "barcodes") %>%
-    tibble::column_to_rownames("barcodes")
-    return(vis) 
-}
+# spotlightDeconvolve <- function(vis, scrna, markers,hvg){
+#   spotlight_ls <- SPOTlight(
+#     x = scrna,
+#     y=vis,
+#     mgs = markers, # Dataframe with the marker genes
+#     hvg = hvg, # Highly variable genes
+#     groups = as.character(scrna$subclass),
+#     model = "ns",
+#     gene_id='gene',
+#     group_id = 'cluster',
+#     weight_id='avg_log2FC',
+#     assay_sc='RNA',
+#     assay_sp='Spatial',
+#   )
+#   
+#   nmf_mod <- spotlight_ls[[1]]
+#   decon_mtrx <- spotlight_ls[[2]]
+#   
+#   decon_mtrx_sub <- decon_mtrx[, colnames(decon_mtrx) != "res_ss"]
+#   decon_mtrx_sub[decon_mtrx_sub < 0.08] <- 0
+#   decon_mtrx <- cbind(decon_mtrx_sub, "res_ss" = decon_mtrx[, "res_ss"])
+#   rownames(decon_mtrx) <- colnames(vis)
+#   
+#   decon_df <- decon_mtrx %>%
+#     data.frame() %>%
+#     tibble::rownames_to_column("barcodes")
+#   
+#   vis@meta.data <- vis@meta.data %>%
+#     tibble::rownames_to_column("barcodes") %>%
+#     dplyr::left_join(decon_df, by = "barcodes") %>%
+#     tibble::column_to_rownames("barcodes")
+#   return(vis) 
+# }
