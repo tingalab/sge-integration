@@ -8,8 +8,9 @@ library(grid)
 library(Cairo)
 library(shiny)
 
-# object <- readRDS("u1.rds")
-object <- U1.Seurat
+# Read in Seurat obj or assign one to the variable 'object' from the global environment
+# object <- readRDS("u2.rds")
+object <- U2.Seurat
 feature = "ACTA2"
 slot = 'data'
 alpha = c(0.1,1)
