@@ -1,4 +1,4 @@
-Repository for **Protocols for single-cell RNA-seq and spatial gene expression integration and interactive visualization** STAR protocol
+Repository for **Protocols for single-cell RNA-seq and spatial gene expression integration and interactive visualization** [STAR protocol](https://www.sciencedirect.com/science/article/pii/S2666166723000059?via%3Dihub)
 
 ![Graphical abstract for this protocol](https://github.com/tingalab/sge-integration/raw/main/integration-protocol-ga.png)
 
