@@ -1,5 +1,4 @@
-# Benchmarking Two Methods for Combining Single-cell RNA-seq and Spatial Gene Expression Data
-Repository for *Benchmarking Two Methods for Combining Single-cell RNA-seq and Spatial Gene Expression Data* STAR protocol
+Repository for **Protocols for single-cell RNA-seq and spatial gene expression integration and interactive visualization** STAR protocol
 
 ![Graphical abstract for this protocol](https://github.com/tingalab/sge-integration/raw/main/integration-protocol-ga.png)
 
