@@ -1,33 +1,32 @@
 ## Setup 
 
-*It may be more intuitibe or efficient to download file using linux commands instead of R commonds. Use the following code do so:*
+It may be more intuitibe or efficient to download file using linux commands instead of R commonds. Use the following code do so:
 
 
-homedir='/path/to/your/home/dir/'
+`homedir='/path/to/your/home/dir/'
 cd $homedir/sge-integration/
 
-
-**download spatial data and scRNA supplemental files**
+#download spatial data and scRNA supplemental files**
 wget https://github.com/tingalab/sge-integration/releases/download/V1/protocol-data.tar.gz
 
-**unzip**
+#unzip
 protocol-data.tar.gz 
 
-**untar**
+#untar
 tar -xvf protocol-data.tar 
 
-**Remove compressed file**
+#Remove compressed file
 rm protocol-data.tar 
 
-**Download scRNA data into the "data/scRNA/" folder**
+#Download scRNA data into the "data/scRNA/" folder
 cd data/scRNA/
 wget https://ftp.ncbi.nlm.nih.gov/geo/series/GSE184nnn/GSE184111/suppl/GSE184111_scRNA_ureter10_normalized_counts.txt.gz
 
-**Uncompress**
+#Uncompress
 gunzip GSE184111_scRNA_ureter10_normalized_counts.txt.gz
 
-**Rename**
-mv GSE184111_scRNA_ureter10_normalized_counts.txt count-matrix.txt
+#Rename
+mv GSE184111_scRNA_ureter10_normalized_counts.txt count-matrix.txt`
 
 ## Functions
 
