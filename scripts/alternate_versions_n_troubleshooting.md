@@ -104,7 +104,9 @@ preProcessGiotto2<-function(gobject, name){
   return(gobject)
 }
 
-This modified function is already added to the `fucntions.R` script. Simply update line in the `Giotto.R` script to:
+
+
+This modified function is already added to the `fucntions.R` script. Simply update line 42 in the `Giotto.R` script to:
 
 U2.Giotto<-preProcessGiotto2(U2, "U2")
 
